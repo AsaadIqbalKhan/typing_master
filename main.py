@@ -35,16 +35,37 @@ def checkSpeedandAccuracy(to_type,userInput,start_time,end_time):
 
     #calculating time
     totalTime=end_time-start_time
-    timeInSec=round(totalTime)
+    timeInSec=round(totalTime,3)
+    if timeInSec==0:
+        timeInSec=1
     speed=len(userpara)/timeInSec
     return speed,accuracy
 
 def updateScore(data,userName,speed,accuracy):
+    #ranking using the accuracy
+    average=speed+accuracy
     if userName in data:
         data[userName]["speed"]=speed
         data[userName]["accuracy"]=accuracy
+        data[userName]["rank"]=average
     else:
-        data[userName]={"speed":speed,"accuracy":accuracy}
+        data[userName]={"rank":average,"speed":speed,"accuracy":accuracy}
+
+    for key,value in data.items():
+        value["rank"]=value["speed"]+value["accuracy"]
+
+    #getting averages to sort
+    averages=[]
+    for key,value in data.items():
+        averages.append(value["rank"])
+    
+    #sorting them and giving it rank
+    count=0
+    while count<len(data):
+        for key,value in data.items():
+            if value["rank"]==averages[count]:
+                value["rank"]=count+1
+                count+=1
 
 def main(data):
     print("This is your typing test")

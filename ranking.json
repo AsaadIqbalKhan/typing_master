@@ -1,10 +1,22 @@
 {
     "usernameTest": {
         "speed": "s",
-        "accuracy": "a"
+        "accuracy": "a",
+        "rank": 1
     },
     "Asaad": {
-        "speed": 0.49295774647887325,
-        "accuracy": 100.0
+        "speed": 0.33054208902600263,
+        "accuracy": 9.090909090909092,
+        "rank": 2
+    },
+    "NEwperson": {
+        "rank": 3,
+        "speed": 0.6469351447517386,
+        "accuracy": 8.571428571428571
+    },
+    "Sourabh": {
+        "rank": 4,
+        "speed": 0.7984386089425124,
+        "accuracy": 22.857142857142858
     }
 }
