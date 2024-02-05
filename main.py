@@ -67,14 +67,20 @@ def updateScore(data,userName,speed,accuracy):
                 value["rank"]=count+1
                 count+=1
 
+def displayleaderboard(data):
+    for key,value in data.items():
+        print(key,f"Rank: {value['rank']}-speed: {value['speed']}-accuracy: {value['accuracy']}")
+        print()
+
+
 def main(data):
     print("This is your typing test")
     print("*")
     print("Type 1 to start your Test, 2 to show leaderboard, 3 to Exit")
     userInput=0
-    while userInput not in [1,2,3]:
-        userInput=int(input("type a number indicating your choice"))
-        if userInput==1:
+    while userInput not in ["1","2","3"]:
+        userInput=(input("type a number indicating your choice"))
+        if userInput=="1":
             isexisting=int(input("one more thing, have you given the test before? type 1 for yes, 0 for no"))
             while isexisting not in [1,0]:
                 isexisting=int(input("1 or 0 only. 1 if existing, 0 if not"))
@@ -89,15 +95,16 @@ def main(data):
                     #..take the test and update the score in existing username in JSON file
                 else:
                     userName=input("Hello there! create a new username to keep your record")
-                    #need to update new entry in json, take the test and update the score with new username in JSON file
+                    # update new entry in json, take the test and update the score with new username in JSON file
             speed,accuracy=test(writingMaterial)
             updateScore(data,userName,speed,accuracy)
             print("Your score is saved")
-        elif userInput==2:
+            print("You can check the scoreboard by restarting the app and choosing option 2")
+        elif userInput=="2":
             #display JSON
-            "dd"
-        elif userInput==3:
-            print("alright bye!")
+            displayleaderboard(data)
+        elif userInput=="3":
+            print("You chose to exit")
         else:
             print("invalid input. 1 or 2 or 3 only")
 with open("ranking.json","r") as file:
