@@ -6,18 +6,18 @@ import time
 import json
 
 def test(writingMaterial):
-    randNum=random.randint(0,len(writingMaterial))
+    randNum=random.randint(0,len(writingMaterial)-1)
     to_type=writingMaterial[randNum]
     print("Pragraph to type:")
     print()
     print(to_type)
     print()
     print("You have to type the above paragraph.")
-    input("Press enter to start")
-    start_time=time()
+    start_time=time.time()
     userInput=input("Start typing...Good Luck!")
-    end_time=time()
+    end_time=time.time()
     speed,accurancy=checkSpeedandAccuracy(to_type,userInput,start_time,end_time)
+    return speed,accurancy
 
 
 def checkSpeedandAccuracy(to_type,userInput,start_time,end_time):
@@ -26,7 +26,7 @@ def checkSpeedandAccuracy(to_type,userInput,start_time,end_time):
 
     #calculating accuracy
     correctCount=0
-    for i in range(len(to_type)):
+    for i in range(len(userpara)):
         if not userpara[i]:
             break
         if testpara[i]==userpara[i]:
@@ -35,8 +35,8 @@ def checkSpeedandAccuracy(to_type,userInput,start_time,end_time):
 
     #calculating time
     totalTime=end_time-start_time
-    timeInMin=round(totalTime//60)
-    speed=len(userpara)/timeInMin
+    timeInSec=round(totalTime)
+    speed=len(userpara)/timeInSec
     return speed,accuracy
 
 def updateScore(data,userName,speed,accuracy):
@@ -62,13 +62,16 @@ def main(data):
                 if isexisting:
                     userName=input("I'll need your existing username to keep your record, type your username")
                     while userName not in data:
-                        userName=input("username does not exist, enter correct username or choose new user by starting the application again")
+                        userName=input("username does not exist, enter correct username or type 1 to exit")
+                        if userName==1:
+                            break
                     #..take the test and update the score in existing username in JSON file
                 else:
                     userName=input("Hello there! create a new username to keep your record")
                     #need to update new entry in json, take the test and update the score with new username in JSON file
             speed,accuracy=test(writingMaterial)
             updateScore(data,userName,speed,accuracy)
+            print("Your score is saved")
         elif userInput==2:
             #display JSON
             "dd"
@@ -76,9 +79,11 @@ def main(data):
             print("alright bye!")
         else:
             print("invalid input. 1 or 2 or 3 only")
-file=open("ranking.json","r")
-data=json.load(file)
+with open("ranking.json","r") as file:
+    data=json.load(file)
 main(data)
+with open("ranking.json","w") as file:
+    json.dump(data,file,indent=4)
             
         
 
