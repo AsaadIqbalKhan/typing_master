@@ -1,10 +1,13 @@
+#paragraphs to test
 writingMaterial=["The journey to success is rarely a straight path. It's filled with challenges, setbacks, and unexpected turns. However, it's the ability to persevere and learn from these experiences that ultimately leads to triumph.",
                  "Technology is advancing at an unprecedented pace, revolutionizing the way we live, work, and communicate. From artificial intelligence to virtual reality, the possibilities seem limitless. Stay informed and adapt to the changing times.",
                  "The quick brown fox jumps over the lazy dog. This classic sentence contains every letter of the alphabet and is often used for typing practice. Try to type it as quickly and accurately as possible."]
+#needed libraries
 import random 
 import time 
 import json
 
+#this function takes the test and return speed,accuracy of the user
 def test(writingMaterial):
     randNum=random.randint(0,len(writingMaterial)-1)
     to_type=writingMaterial[randNum]
@@ -19,7 +22,7 @@ def test(writingMaterial):
     speed,accurancy=checkSpeedandAccuracy(to_type,userInput,start_time,end_time)
     return speed,accurancy
 
-
+#this is a helper funtion for the test function
 def checkSpeedandAccuracy(to_type,userInput,start_time,end_time):
     testpara=to_type.split(" ")
     userpara=userInput.split(" ")
@@ -67,12 +70,13 @@ def updateScore(data,userName,speed,accuracy):
                 value["rank"]=count+1
                 count+=1
 
+#to display leaderboard in the terminal.
 def displayleaderboard(data):
     for key,value in data.items():
         print(key,f"Rank: {value['rank']}-speed: {value['speed']}-accuracy: {value['accuracy']}")
         print()
 
-
+#here data parameter is the leaderboard json file
 def main(data):
     print("This is your typing test")
     print("*")
@@ -107,9 +111,11 @@ def main(data):
             print("You chose to exit")
         else:
             print("invalid input. 1 or 2 or 3 only")
+#two lines below this are loading the leaderboard json file and storing it in data variable
 with open("ranking.json","r") as file:
     data=json.load(file)
 main(data)
+#the following two lines are dumping(updating) the changes made by main function into the ranking file
 with open("ranking.json","w") as file:
     json.dump(data,file,indent=4)
             
